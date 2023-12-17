@@ -21,14 +21,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      date: {
-        type: DataTypes.DATE,
-      },
       isDone: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       isImportant: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {

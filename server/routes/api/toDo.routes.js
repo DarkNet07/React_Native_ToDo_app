@@ -6,9 +6,7 @@ const { ToDo } = require('../../db/models');
 
 router.get('/', async (req, res) => {
   try {
-    // проверить, есть ли такой юзер в бд
     const toDos = await ToDo.findAll();
-    // отправляем ответ
     return res.json({
       success: true,
       toDos,
@@ -20,11 +18,12 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { toDoName, toDoDescription } = req.body;
+  const { toDoName, toDoDescription, isImportant } = req.body;
   try {
     const createdToDO = await ToDo.create({
       name: toDoName,
       description: toDoDescription,
+      isImportant,
     });
     if (createdToDO) {
       return res.json(createdToDO);
@@ -38,14 +37,14 @@ router.post('/', async (req, res) => {
 
 router.route('/:id').put(async (req, res) => {
   const { id } = req.params;
+
   try {
     const updated = await ToDo.update(req.body, {
       where: { id },
-      returning: true, // если нужно, чтобы вернулась сущность, которая изменилась
+      returning: true,
     });
     if (updated[0] > 0) {
       return res.json(updated);
-      // return res.json(updated[1])// вернется массив измененных сущностей
     }
     return res.status(400).json({ message: 'Не получилось изменить задачу' });
   } catch (error) {
@@ -55,8 +54,6 @@ router.route('/:id').put(async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(id, 'это id!');
-  console.log(typeof id, 'это TYPE id!');
 
   try {
     if (id) {
@@ -64,7 +61,6 @@ router.delete('/:id', async (req, res) => {
         const deleted = await ToDo.destroy({
           where: { id },
         });
-        console.log(deleted, ' deleted element');
         if (deleted) {
           return res.sendStatus(204);
         }

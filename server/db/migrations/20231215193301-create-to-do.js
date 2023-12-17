@@ -16,14 +16,13 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      date: {
-        type: Sequelize.DATE,
-      },
       isDone: {
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       isImportant: {
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

@@ -3,7 +3,6 @@ import axios from 'axios';
 export const fetchLoadToDos = async () => {
   try {
     const response = await axios.get('http://192.168.1.67:3000/api/toDos');
-    // console.log(response, 'RESPONSE');
     return response.data.toDos;
   } catch (error) {
     console.error('This is Error message of getting all ToDo:', error.message);
@@ -12,14 +11,12 @@ export const fetchLoadToDos = async () => {
 };
 
 export const fetchSaveToDo = async (newToDo) => {
-  // console.log(newToDo);
 
   try {
     const response = await axios.post(
       'http://192.168.1.67:3000/api/toDos',
       newToDo
     );
-    console.log('Responseeeeeeeeee:', response.data);
 
     return response.data;
   } catch (error) {

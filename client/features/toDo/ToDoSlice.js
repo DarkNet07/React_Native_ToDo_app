@@ -11,15 +11,16 @@ export const updateToDo = createAsyncThunk('toDo/update', (toDoUpdate) => {
   return api.fetchUpdateToDo(toDoUpdate);
 });
 
-export const loadToDos = createAsyncThunk('baristas/load', () => api.fetchLoadToDos());
+export const loadToDos = createAsyncThunk('baristas/load', () =>
+  api.fetchLoadToDos()
+);
 
 export const saveToDo = createAsyncThunk('barista/freeDate/save', (newToDo) =>
   api.fetchSaveToDo(newToDo)
 );
 
-export const deleteToDo = createAsyncThunk(
-  'coffeeShop/favorite/remove',
-  (id) => api.fetchDeleteToDo(id)
+export const deleteToDo = createAsyncThunk('coffeeShop/favorite/remove', (id) =>
+  api.fetchDeleteToDo(id)
 );
 
 const ToDoSlice = createSlice({
@@ -28,7 +29,9 @@ const ToDoSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(updateToDo.fulfilled, (state, action) => {
-      state.ToDo = action.payload;
+      state.ToDoList = state.ToDoList.map((toDo) =>
+        toDo.id == action.payload.id ? action.payload : toDo
+      );
     });
     builder.addCase(loadToDos.fulfilled, (state, action) => {
       state.ToDoList = action.payload;
@@ -37,7 +40,9 @@ const ToDoSlice = createSlice({
       state.ToDoList.push(action.payload);
     });
     builder.addCase(deleteToDo.fulfilled, (state, action) => {
-      state.ToDoList = state.ToDoList.filter((toDo) => toDo.id !== +action.payload);
+      state.ToDoList = state.ToDoList.filter(
+        (toDo) => toDo.id !== +action.payload
+      );
     });
   },
 });
