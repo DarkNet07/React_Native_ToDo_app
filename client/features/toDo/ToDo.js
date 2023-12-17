@@ -249,4 +249,3 @@ const styles = StyleSheet.create({
 
 export default ToDo;
 
-// thumbColor={{ true: '#f5dd4b', false: '#f4f3f4' }}
